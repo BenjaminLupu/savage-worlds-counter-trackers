@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Savage World Counter Tracker</title>
+    <meta name="description" content="A small utility for managing Savage Worlds counters such as bennies, wounds or fatigue on your phone during games with your friends.">
+
+    <!--
+    Kudos to:
+    https://developer.mozilla.org/fr/
+    https://www.svgrepo.com/collection/nilicons-rounded-interface-icons/
+    https://www.iloveimg.com/
+    https://cloudconvert.com/ttf-to-woff2
+    https://github.com/dazecoop/vanilla-js-i18n-translator
+    https://htmlcolorcodes.com/color-names/
+    -->
+
+    <style>
+
+        /* Hide UI elements (eg. buttons) when printing */
+        @media print {
+            .no-print {
+                display: none;
+            }
+        }
+
+        /* Font fieldset titles ; to be used in uppercase */
+        @font-face {
+            font-family: "Anton-Regular";
+            src: url(./fonts/Anton-Regular.woff2) format('woff2');
+        }
+
+        /* Font for header title */
+        @font-face {
+            font-family: "Squada-One";
+            src: url(./fonts/squada-one.regular.woff2) format('woff2');;
+        }
+
+        html {
+            font-size: 62.5%; /* = 10px ; 1.1rem = 11px */
+        }
+
+        body {
+            font-size: 1.4rem;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+        }
+
+        /***************/
+        /* UI Elements */
+        /***************/
+
+        /* Page header */
+        header {
+            position: sticky;
+            top: 0;
+            left: 0;
+            box-sizing: border-box;
+            border-bottom: .2rem rgb(127, 155, 127) solid;
+            box-shadow: .2rem .2rem 1rem .2rem #4D4D4D;
+            width: 100%;
+            height: 5rem;
+            margin-bottom: 2rem;
+            background-color: black;
+            z-index: 10;
+            display: flex;
+            flex-flow: row wrap;
+            align-items: center;
+        }
+
+        /* Header title */
+        h1 {
+            font-family: Squada-One;
+            text-transform: uppercase;
+            color: rgb(127, 155, 127);
+            line-height: 5rem;
+            font-size: 3.5rem;
+            margin:0 0 0 .8rem;
+            padding:0;
+            font-weight: 100;
+            display:inline;
+        }
+
+        /* Header button */
+        header button {
+            width: 3.8rem;
+            height: 3.8rem;
+            position: absolute;
+            right: .4rem;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: brown;
+            border: none;
+        }
+
+        header button:active {
+            margin-top:.2rem;
+        }
+
+        /* Save link button */
+        #get-save-link-button {
+            background-image: url(icons/link-svgrepo-com.svg);
+            right: .6rem;
+        }
+
+        /* Reset all button */
+        #reset-all-button {
+            background-image: url(icons/refresh-svgrepo-com.svg);
+            background-size: 70%;
+            right: 5.2rem;
+        }
+
+        /* Counter section */
+        fieldset {
+            display: flex;
+            flex-flow: row wrap;
+            align-items: center;
+            margin: 2rem 1rem;
+        }
+
+        /* Each counter section elements (counter itself and various buttons) are encloded in a p */
+        fieldset p {
+            margin-right: 3rem;
+        }
+
+        /* Step dropdown lists are enclosed in specific p */
+        fieldset p:has(.counter-step-chooser) {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            top:-1rem;
+        }
+
+        fieldset p:has(.counter-step-chooser) label {
+            height: 1.8rem;
+            margin: .2rem .2rem;
+            background-color:#1f1f1f;
+            color:white;
+            font-weight: bold;
+            text-align: center;
+            padding: .1rem 0 .1rem 0;
+            font-size: 1.2rem;
+            font-family: sans-serif;
+            font-variant: small-caps;
+            box-sizing: border-box;
+        }
+
+        /* Extra counter titles */
+        fieldset:has(.counter[t4-metric*="extra-counter"]) legend {
+            color:#303030;
+        }
+
+        /* Counter section title */
+        legend {
+            font-family: Anton-Regular;
+            text-transform: uppercase;
+            font-size: 1.8rem;
+            color:brown;
+        }
+
+        /* Label for fields (eg. Pace modifier) */
+        label {
+            display: block;
+            font-family: sans-serif;
+            font-size: 1.8rem;
+            margin-bottom: .5rem;
+        }
+
+        /* If label is in English, capitalize all words */
+        label:lang(en) {
+            text-transform: capitalize;
+        }
+
+        /* If label is in French, capitalize only first word */
+        label:lang(fr):first-letter {
+            text-transform: uppercase;
+        }
+
+        /* Counter */
+        .counter {
+            height: 5rem;
+            width: 5rem;
+            text-align: center;
+            font-size: 3rem;
+            cursor: default;
+            border: .1rem black solid;
+        }
+
+        /* Special counter background when an alert threshold is reached */
+        .counter-alert-background {
+           background-image: linear-gradient(red,orange);
+        }
+
+        /* Counter button (eg. add, remove, reset) */
+        .squareButton {
+            position: relative;
+            height: 5rem;
+            width: 5rem;
+            color: whitesmoke;
+            background-color: brown;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            padding: .5rem;
+            box-shadow: .2rem .2rem 1rem .2rem #4D4D4D;
+            border: none;
+        }
+
+        .squareButton:active {
+            margin-top:.2rem;
+        }
+
+        .squareButton:disabled {
+            background-color: rgb(138, 133, 133);
+        }
+
+        /* Icon for add button */
+        .counter-button[t4-action="add"] {
+            background-image: url("./icons/add-plus-svgrepo-com.svg");
+        }
+
+        /* Icon for remove button */
+        .counter-button[t4-action="remove"] {
+            background-image: url("./icons/remove-svgrepo-com.svg");
+        }
+
+        /* Icon for reset button */
+        .counter-button[t4-action="reset"] {
+            background-image: url("./icons/refresh-svgrepo-com.svg");
+            background-size: 60%;
+        }
+
+        /* Small round step indicator in the lower right corner of a counter button */
+        .step-indicator {
+            position:absolute;
+            bottom:-.5rem;
+            right:-.5rem;
+            height:2rem;
+            width:auto;
+            background-color:dimgrey;
+            padding:.05rem .25rem;
+            text-align:center;
+            vertical-align:middle;
+            line-height:2rem;
+            border-radius:100%;
+            color:white;
+            font-weight:bold;
+            overflow-x: visible;
+            min-width: 1.6rem;
+        }
+
+        /* Step dropdown list */
+        .squareSelect {
+            height: 5rem;
+            width: 5rem;
+            text-align: center;
+            font-size: 2rem;
+        }
+
+        /* Pinnacle Entertainment Group notice for Fan License panel */
+        #peg-notice {
+            position: fixed;
+            z-index: 10;
+            bottom: 0;
+            left: 0;
+            border-top: .1rem black solid;
+            width: 100%;
+            box-shadow: .2rem .2rem 1rem .2rem #4D4D4D;
+            background-color: white;
+        }
+
+        /* Pinnacle Entertainment Group Fan License Logo */
+        #peg-fan-license-logo {
+            background-image: url(img/peg-fan-license-logo.png);
+            height: 8rem;
+            background-size: 12rem 8rem;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+
+        /* Pinnacle Entertainment Group notice for Fan License text */
+        #peg-fan-license-notice-text {
+            text-align: justify;
+            padding: 0 2rem;
+            font-size: 1.2rem;
+            font-family: sans-serif;
+        }
+        
+        /* Button to close the Pinnacle Entertainment Group Fan License notice */
+        #peg-notice-close-button {
+            position:absolute;
+            right:0;
+            top:0;
+            background-color:brown;
+            width:4rem;
+            height:4rem;
+            background-image: url(icons/close-svgrepo-com.svg);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            box-shadow: .2rem .2rem 1rem .2rem #4D4D4D;
+            border: none;
+        }
+
+        #peg-notice-close-button:active {
+            margin-top:.2rem;
+        }
+
+        /* Field for modifiers (eg. Trait Rolls, Pace) */
+        .modifier {
+            display:block;
+            font-size: 2rem;
+            line-height: 2.5rem;
+            text-align: left;
+            padding-left: .5rem;
+            height: 2.5rem;
+            width: 10rem;
+        }
+
+        /**************************/
+        /* Effects and animations */
+        /**************************/
+
+        /* Closing animation for Pinnacle Entertainment Group Fan License notice */
+        .peg-notice-close-effect {
+            animation: swipe-down-and-fadeout 200ms ease-in 1;
+            animation-fill-mode: forwards;
+        }
+
+        @keyframes swipe-down-and-fadeout {
+            from {
+                opacity: 1;
+                bottom: 0;
+            }
+            to {
+                opacity: 0;
+                display: none;
+                bottom: -4em;
+            }
+        }
+
+        /* Adding or removing a benny animation */
+        #animated-benny {
+            position: absolute;
+            height: 5rem;
+            width: 5rem;
+            margin: 0 .3rem;
+            background-image: url(img/benny.png);
+            background-repeat: no-repeat;
+            background-position: center;
+            border-radius: 50%;
+            transition: transform 3s;
+            transform-style: preserve-3d;
+            opacity: 0;
+        }
+
+        .hide-benny {
+            top : -200rem;
+            left : -200rem;
+        }
+
+        .start-benny-animation {
+            animation: flip-and-vanish 600ms ease-in 1;
+            animation-fill-mode: forwards
+        }
+
+        @keyframes flip-and-vanish {
+            from {
+                margin-bottom: 0;
+                opacity: 1;
+                transform: scale(1);
+            }
+            10% {
+                transform: rotate3d(0, 1, 0, 180deg);
+            }
+            30% {
+                transform: rotate3d(0, 1, 0, 180deg);
+            }
+            to {
+                margin-bottom: 15rem;
+                transform: scale(0);
+                opacity: 0;
+            }
+        }
+
+    </style>
+
+    <script>
+
+        /**************/
+        /* START HERE */
+        /**************/
+
+        // Waiting for DOM to be ready
+        document.addEventListener('DOMContentLoaded', function (event) {
+
+            // Get all necessary objects
+            const searchParams = new URLSearchParams(window.location.search); // Get URL querystring (ie search parameters)
+            const counters = document.getElementsByClassName("counter"); // Get all counters
+            const counterButtons = document.getElementsByClassName("counter-button"); // Get all counter buttons
+            const counterStepChoosers = document.getElementsByClassName("counter-step-chooser"); // Get all step chooser dropdown lists
+            const getSaveLinkButton = document.getElementById("get-save-link-button"); // Get Get Save Link button
+            const resetAllButton = document.getElementById("reset-all-button"); // Get Reset All Counters button
+
+            // When Get Save Link button (in header) is clicked...
+            getSaveLinkButton.addEventListener("click",createSaveLink,false);
+            
+            // When Reset All Counters button (in header) is clicked...
+            resetAllButton.addEventListener("click",resetAll,false);
+
+            /*******************/
+            /* Benny animation */
+            /*******************/
+
+            const animatedBenny = document.getElementById("animated-benny"); // Get animated Benny
+
+            // When Benny animation starts...
+            animatedBenny.addEventListener("animationstart", startBennyAnimation,false);
+
+            // When Benny animation ends...
+            animatedBenny.addEventListener("animationend", endBennyAnimation,false);
+
+            /****************************************************/
+            /* Pinnacle Entertainment Group Fan License notice  */
+            /****************************************************/
+
+            let pegNotice = document.getElementById("peg-notice"); // Get notice panel
+            let pegNoticeCloseButton = document.getElementById("peg-notice-close-button"); // Get notice close button
+
+            // When notice close button is clicked...
+            pegNoticeCloseButton.addEventListener("click", function(e) {
+                pegNotice.classList.add("peg-notice-close-effect");
+            });
+
+            /********************************/
+            /* Recover saved counter values */
+            /********************************/
+            
+            // Get any save counter values from query string parameters and update counter values
+            Array.from(counters).forEach((counter) => {
+
+                // Get the save code for the counter
+                let saveCode = counter.getAttribute("t4-rpgcode") + counter.getAttribute("t4-save-key");
+
+                // Search for the save code in the query string
+                if (searchParams.has(saveCode)) {
+
+                    // Get max and min values of the counter
+                    let metricMax = parseInt(counter.getAttribute("t4-max"));
+                    let metricMin = parseInt(counter.getAttribute("t4-min"));
+
+                    // Get the saved counter value
+                    let savedMetric = parseInt(searchParams.get(saveCode));
+
+                    // Update the counter value with the saved value (checking for max an min values)
+                    if (savedMetric >= metricMin) {
+
+                        if (!isNaN(metricMax)) {
+                            
+                            if (savedMetric <= metricMax) {
+                                counter.value = savedMetric;
+                            } else {
+                                counter.value = metricMax;
+                            }
+
+                        } else {
+                            counter.value = savedMetric;
+                        }
+
+                    }
+
+                }
+
+                // Set counter and its buttons appearance
+                setCounterAndButtonStates(counter,"init");
+                
+                // Update depending modifier fields
+                setModifier(counter);
+
+            });
+
+            /*******************/
+            /* Counter buttons */
+            /*******************/
+
+            // Parse all counter buttons
+            Array.from(counterButtons).forEach((counterButton) => {
+
+                // Update step indicator
+                // Todo: rename function (counter --> indicator)
+                setStepCounter(counterButton);
+
+                // Handle click on all counter buttons
+                counterButton.addEventListener("click",function(e) {
+
+                    // Get counter button properties
+                    let rpgCode = e.target.getAttribute("t4-rpgcode"); // Get RPG system prefix (eg. sw for Savage Worlds)
+                    let action = e.target.getAttribute("t4-action"); // Get button action (eg. Add, Remove, Reset)
+                    let metric = e.target.getAttribute("t4-metric"); // Get button metric (eg. Wounds, Fatigue, Power Points)
+
+                    // Get step to increment/decrement counter (min 1)
+                    let step = parseInt(e.target.getAttribute("t4-step"));
+                    if (!step) {    // Covers "", undefined, false, 0 or NaN values
+                        step = 1;   // Step default value is 1
+                    } 
+
+                    // Get button counter and its properties
+                    let counter = document.querySelector(".counter[t4-rpgcode=\"" + rpgCode + "\"][t4-metric=\"" + metric + "\"]");                    
+                    let counterMin = counter.getAttribute("t4-min"); // Counter min value
+                    let counterMax = counter.getAttribute("t4-max"); // Counter max value (numeric or no-max)
+                    let counterAlertThreshold = counter.getAttribute("t4-alert-threshold"); // Counter alert threshold (min or max)
+                    let counterCurrentValue = parseInt(counter.value); // Counter current value
+
+                    // When an action button is clicked...
+                    switch (action) {
+                        case "add": 
+                            if (counterCurrentValue < counterMax || counterMax == "no-max") {
+                                counterCurrentValue = counterCurrentValue + step;
+                                if (counterCurrentValue > counterMax && counterMax != "no-max") {
+                                    counterCurrentValue = counterMax;
+                                }
+                                beforeCounterUpdate(counter,action); // Hook to insert any action before counter value is updated (used for benny animation)
+                                counter.value = counterCurrentValue;
+                            }
+                            setCounterAndButtonStates(counter,action); // Update counter and its buttons appearance
+                            break;
+                        case "remove": 
+                            if (counterCurrentValue > counterMin) {
+                                counterCurrentValue = counterCurrentValue - step;
+                                if (counterCurrentValue < counterMin) {
+                                    counterCurrentValue = counterMin;
+                                }
+                                beforeCounterUpdate(counter,action);  // Hook to insert any action before counter value is updated (used for benne animation)
+                                counter.value = counterCurrentValue;
+                            }
+                            setCounterAndButtonStates(counter,action); // Update counter and its buttons appearance
+                            break;
+                        case "reset":
+                            // Handle the counter default value (eg. 3 for bennies)
+                            // Todo: to relocate where I get other counter properties
+                            if (counter.getAttribute("t4-default") != null) {
+                                counter.value = counter.getAttribute("t4-default");
+                            } else {
+                                counter.value = counterMin;
+                            }
+                            setCounterAndButtonStates(counter,action); // Update counter and its buttons appearance
+                            break;
+                    }
+
+                    // Update modifier values depending on counter new value (eg. Pace, Trait Rolls)
+                    setModifier(counter);
+
+                });
+            });
+
+            /***********************/
+            /* Step dropdown lists */
+            /***********************/
+
+            // Parse all pick a step dropdown lists
+            Array.from(counterStepChoosers).forEach((counterStepChooser) => {
+
+                // When a new step is picked in the list...
+                counterStepChooser.addEventListener("change", function(e) {
+
+                    let rpgCode = e.target.getAttribute("t4-rpgcode"); // Get RPG system prefix (eg. sw for Savage Worlds)
+                    let metric = e.target.getAttribute("t4-metric"); // Get list metric (eg. Wounds, Fatigue, Power Points)
+                    let chosenStepValue = counterStepChooser.options[counterStepChooser.selectedIndex].value; // Get the picked step value
+                    let counterButtons = document.querySelectorAll(".counter-button[t4-rpgcode=\"" + rpgCode + "\"][t4-metric=\"" + metric + "\"]"); // Get the sibling counter buttons (same RPG, same metric)
+
+                    // Parse all counter buttons
+                    Array.from(counterButtons).forEach((counterButton) => {
+
+                        // Update button step
+                        if (counterButton.getAttribute("t4-action") == "add" || counterButton.getAttribute("t4-action") == "remove") {
+                            counterButton.setAttribute("t4-step", chosenStepValue);
+                            setStepCounter(counterButton); // Update step indicator value
+                        }
+                    });
+                    
+                });
+
+            });
+
+            /*************/
+            /* Functions */
+            /*************/
+
+            // Copy a text stub in clipboard
+            // Todo: to be fusioned with
+            async function copyTextToClipboard(textToCopy) {
+                try {
+                    if (navigator?.clipboard?.writeText) {
+                        await navigator.clipboard.writeText(textToCopy);
+                        alert(document.getElementById("save-url-message").innerHTML);
+                    }
+                } catch (err) {
+                    console.error(err);
+                }
+            }
+
+            // Update counter and its buttons after an action is done (Add, Remove, Reset, Init)
+            function setCounterAndButtonStates(counter,action) {
+    
+                // Get counter properties
+                let counterMetric = counter.getAttribute("t4-metric"); // Get counter metric (eg. Wounds, Fatigue, Power Points)
+                let counterMin = counter.getAttribute("t4-min"); // Get counter min value
+                let counterMax = counter.getAttribute("t4-max"); // Get counter max value (numeric or no-max)
+                let counterDefault = counter.getAttribute("t4-default"); // Get counter default value (min, max or numeric)
+                let counterCurrentValue = parseInt(counter.value); // Get counter current value
+                let counterAlertThreshold = counter.getAttribute("t4-alert-threshold"); // Get counter alert threshold 
+
+                // Get button objects (Add, Remove, Reset)
+                let addButton = document.querySelector(".counter-button[t4-action=\"add\"][t4-metric=\"" + counterMetric + "\"]");
+                let removeButton = document.querySelector(".counter-button[t4-action=\"remove\"][t4-metric=\"" + counterMetric + "\"]");
+                let resetButton = document.querySelector(".counter-button[t4-action=\"reset\"][t4-metric=\"" + counterMetric + "\"]");
+
+                // Reset alert counter background
+                counter.classList.remove("counter-alert-background");
+
+                // Change counter background of alert threshold is reached
+                if ((action == "add" || action == "init") && counterCurrentValue == counterMax && counterAlertThreshold == "max") {
+                    counter.classList.add("counter-alert-background");
+                }
+
+                if ((action == "remove" || action == "init") && counterCurrentValue == counterMin && counterAlertThreshold == "min") {
+                    counter.classList.add("counter-alert-background");
+                }
+
+                // Update counter button states according to counter value when adding/removing
+                if (action == "add" || action == "remove" || action == "init") {
+
+                    // Counter value > counter min value
+                    if (counterCurrentValue > counterMin) {
+                        if (counterDefault != null) {
+                            if (counterCurrentValue == counterDefault) {
+                                resetButton.disabled = true;
+                            } else {
+                                resetButton.disabled = false;
+                            }
+                        } else {
+                            resetButton.disabled = false;
+                        }    
+                        removeButton.disabled = false;
+                    }
+
+                    // Check if the counter has a max value
+                    if (counterMax != "no-max") {
+
+                        if (counterCurrentValue == counterMax) {
+                            addButton.disabled = true;
+                        }
+
+                        if (counterCurrentValue < counterMax) {
+                            addButton.disabled = false;
+                        }
+                    }
+
+                    // Counter value = counter min value
+                    if (counterCurrentValue == counterMin) {
+                    
+                        if (counterDefault != null) {
+                            if (counterDefault != counterMin) {
+                                resetButton.disabled = false;
+                            } else {
+                                resetButton.disabled = true;
+                            }
+                        } else {
+                            resetButton.disabled = true;
+                        }
+                        removeButton.disabled = true;
+                    }
+                }
+
+                // Update counter button states according to counter value when resetting
+                if (action == "reset") {
+                    
+                    addButton.disabled = false;
+                    
+                    if (counterCurrentValue == counterMin) {
+                        removeButton.disabled = true;
+                    } else {
+                        removeButton.disabled = false;
+                    }
+                    
+                    resetButton.disabled = true;
+
+                    // Change counter background of alert threshold is reached
+                    if (counterCurrentValue == counterMin && counterAlertThreshold == "min") {
+                        counter.classList.add("counter-alert-background");
+                    } else {
+                        counter.classList.remove("counter-alert-background");
+                    }
+                }
+
+            }
+
+            // Update counter button step indicator 
+            function setStepCounter(counterButton) {
+                    
+                let stepAction = counterButton.getAttribute("t4-action"); // Get button action (Add, Remove, Reset)
+                let stepCounter = counterButton.querySelector(".step-indicator"); // Get button step indicator
+                let step = parseInt(counterButton.getAttribute("t4-step")); // Get button step
+
+                // If step is not defined, default is 1
+                if (!step) {    // Covers "", undefined, false, 0 or NaN values
+                    step = 1;   // Step default value is 1
+                } 
+
+                // Update step indicator value
+                if (stepCounter !== null) {
+                    switch (stepAction) {
+                        case "add": 
+                            stepCounter.innerHTML = "+" + step // +n
+                            break;
+                        case "remove": 
+                            stepCounter.innerHTML = "-" + step // -n
+                            break;
+                    }
+                }
+            }
+
+            // Update modifiers when counter value changes
+            function setModifier(counter) {
+                
+                let metric = counter.getAttribute("t4-metric"); // Get counter metric
+                let counterWounds = document.querySelector(".counter[t4-metric=wounds]"); // Get wounds counter
+                let counterFatigue = document.querySelector(".counter[t4-metric=fatigue]"); // Get fatigue counter
+                let traitRollsMod = document.querySelector(".modifier[t4-metric=trait-rolls]"); // Get Trait Rolls modifier field
+                let paceMod = document.querySelector(".modifier[t4-metric=pace]"); // Get Pace modifier field
+
+                // Update Trait Rolls and/or Pace penalties if wounds or fatigue have changed
+                if (metric == "wounds" || metric == "fatigue") {
+
+                    traitRollsMod.value = parseInt(counterWounds.value) + parseInt(counterFatigue.value);
+                    paceMod.value = parseInt(counterWounds.value);
+
+                    if (traitRollsMod.getAttribute("t4-modtype") == "penalty") {
+                        traitRollsMod.value = traitRollsMod.value * -1;
+                    }
+
+                    if (paceMod.getAttribute("t4-modtype") == "penalty") {
+                        paceMod.value = paceMod.value * -1;
+                    }
+
+                }  
+
+            }
+
+            // Hook triggered after a counter value has been updated
+            function beforeCounterUpdate(counter,action) {
+
+                let counterValue = parseInt(counter.value); // Get counter value
+                let counterMin = parseInt(counter.getAttribute("t4-min")); // Get counter min value
+
+                // Trigger benny animation when adding/removing a benny
+                if (counter.id == "bennies-counter") {
+
+                    if (action == "add") {
+                        animatedBenny.classList.add("start-benny-animation");
+                    }
+
+                    if (action == "remove" && counterValue != counterMin) {
+                        animatedBenny.classList.add("start-benny-animation");
+                    }
+                
+                }
+            }
+
+            // Create the save link and save it to the clipboard
+            function createSaveLink() {
+
+                let baseUrl = new URL(window.location.href); // Get current URL
+                let savedParameters = new URLSearchParams(); // Get URL query string
+                
+                let counters = document.getElementsByClassName("counter"); // Get all counters
+
+                // Parse all counters and save their values (using the RPG system code (eg. sw for Savage Worlds) and the unique save key)
+                Array.from(counters).forEach((counter) => {
+                    savedParameters.set(counter.getAttribute("t4-rpgcode") + counter.getAttribute("t4-save-key"), counter.value);
+                });
+
+                // Create save URL
+                baseUrl.search = savedParameters;
+
+                // Copy save URL to  clipboard (an alert will inform the user)
+                copyTextToClipboard(baseUrl.href);
+
+            }
+
+            // Reset all counters and modifiers
+            function resetAll() {
+                
+                let counters = document.getElementsByClassName("counter"); // Get all counters
+
+                // Ask user if he/she really wants to reset all counters and modifiers
+                if (confirm(document.getElementById("confirm-reset-all-message").innerHTML) == true) {
+
+                    // Parse all counters
+                    Array.from(counters).forEach((counter) => {
+                        
+                        let counterMin = counter.getAttribute("t4-min"); // Get counter min value
+                        let counterDefault = counter.getAttribute("t4-default"); // Get counter default value
+
+                        // Update counter value (default or min)
+                        if (counterDefault != null) {
+                            counter.value = counterDefault;
+                        } else {
+                            counter.value = counterMin;
+                        }
+
+                        // Update counter and its buttons appearance according to the counter value (simulate a manuel reset action)
+                        setCounterAndButtonStates(counter,"reset");
+                        
+                        // Reset modifiers (Trait Rolls and Pace) values
+                        setModifier(counter);
+                        
+                    }); 
+                
+                }
+            }
+
+            // Start Benny animation
+            function startBennyAnimation() {
+                animatedBenny.classList.remove("hide-benny"); // Show Benny
+            }
+
+            // Reset Benny animation
+            function endBennyAnimation() {
+                animatedBenny.classList.remove("start-benny-animation"); // Reset animation CSS class
+                animatedBenny.classList.add("hide-benny"); // Hide Benny
+            }
+
+        })
+
+    </script>
+
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <h1 data-i18n="sw.specific-strings.header-title">Savage World Counters Tracker</h1>
+        <button id="reset-all-button"></button>
+        <button id="get-save-link-button"></button>
+    </header>
+
+    <form>
+
+        <!-- Trait Rolls and Pace modifiers -->
+        <fieldset>
+            <legend data-i18n="sw.specific-strings.modifiers-fieldset-title">Modifiers due to wounds or fatigue</legend>
+            
+            <!-- Trait Rolls modifier -->
+            <p>
+                <label data-i18n="sw.terms-long.trait-rolls">Trait Rolls</label>
+                <input class="modifier" type="text" value="0" inputmode="numeric" readonly t4-rpgcode="sw" t4-metric="trait-rolls" t4-min="-5" t4-max="0" t4-modtype="penalty" />
+            </p>
+            
+            <!-- Pace modifier -->
+            <p>
+                <label data-i18n="sw.terms-long.pace">Pace</label>
+                <input class="modifier" type="text" value="0" inputmode="numeric" readonly t4-rpgcode="sw" t4-metric="pace" t4-min="-3" t4-max="0" t4-modtype="penalty" />
+            </p>
+        
+        </fieldset>
+        
+        <!-- Bennies -->
+        <fieldset>
+            <legend data-i18n="sw.terms-long.bennies">Bennies</legend>
+            
+            <!-- Benny counter -->
+            <p>
+                <input id="bennies-counter" class="counter" value="3" type="text" value="0" inputmode="numeric" readonly t4-rpgcode="sw" t4-metric="bennies" t4-min="0" t4-max="no-max" t4-save-key="b" t4-alert-threshold="min" t4-default="3" />
+                <div id="animated-benny"></div>
+            </p>
+            
+            <!-- Add Benny button -->
+            <p>
+                <button type="button" class="squareButton counter-button no-print" t4-rpgcode="sw" t4-action="add" t4-metric="bennies">
+                    <div class="step-indicator"></div>
+                </button>
+            </p>
+            
+            <!-- Remove Benny button -->
+            <p>
+                <button type="button" class="squareButton counter-button no-print" type="button" disabled t4-rpgcode="sw" t4-action="remove" t4-metric="bennies">
+                    <div class="step-indicator"></div>
+                </button>
+            </p>
+            
+            <!-- Reset Bennies button -->
+            <p>
+                <button type="button" class="squareButton counter-button no-print" type="button" disabled t4-rpgcode="sw" t4-action="reset"  t4-metric="bennies"></button>
+            </p>
+        </fieldset>
+        
+        <!-- Wounds -->
+        <fieldset>
+            <legend data-i18n="sw.terms-long.wounds">Wounds</legend>
+            
+            <!-- Wound counter -->
+            <p>
+                <input class="counter" type="text" value="0" inputmode="numeric" readonly t4-rpgcode="sw" t4-metric="wounds" t4-min="0" t4-max="3" t4-save-key="w"  t4-alert-threshold="max" />
+            </p>
+            
+            <!-- Add Wound button -->
+            <p>
+                <button type="button" class="squareButton counter-button no-print" t4-rpgcode="sw" t4-action="add" t4-metric="wounds">
+                    <div class="step-indicator"></div>
+                </button>
+            </p>
+            
+            <!-- Remove Wound button -->
+            <p>
+                <button type="button" class="squareButton counter-button no-print" type="button" disabled t4-rpgcode="sw" t4-action="remove" t4-metric="wounds">
+                    <div class="step-indicator"></div>
+                </button>
+            </p>
+            
+            <!-- Reset Bennies button -->
+            <p>
+                <button type="button" class="squareButton counter-button no-print" type="button" disabled t4-rpgcode="sw" t4-action="reset"  t4-metric="wounds"></button>
+            </p>
+        </fieldset>
+        
+        <!-- Fatigue -->
+        <fieldset>
+            <legend data-i18n="sw.terms-long.fatigue">Fatigue</legend>
+            
+            <!-- Fatigue counter -->
+            <p>
+                <input class="counter" type="text" value="0" inputmode="numeric" readonly t4-rpgcode="sw" t4-metric="fatigue" t4-min="0" t4-max="2"  t4-save-key="f" t4-alert-threshold="max" />
+            </p>
+            
+            <!-- Add Fatigue button -->
+            <p>
+                <button type="button" class="squareButton counter-button no-print" type="button" t4-rpgcode="sw" t4-action="add" t4-metric="fatigue">
+                    <div class="step-indicator"></div>
+                </button>
+            </p>
+            
+            <!-- Remove Fatigue button -->
+            <p>
+                <button type="button" class="squareButton counter-button no-print" type="button" disabled t4-rpgcode="sw" t4-action="remove"  t4-metric="fatigue">
+                    <div class="step-indicator"></div>
+                </button>
+            </p>
+            
+            <!-- Reset Fatigue button -->
+            <p>
+                <button type="button" class="squareButton counter-button no-print" type="button" disabled t4-rpgcode="sw" t4-action="reset" t4-metric="fatigue"></button>
+            </p>
+        </fieldset>
+
+        <!-- Power Points -->
+        <fieldset>
+            <legend data-i18n="sw.terms-long.power-points">Power Points</legend>
+            
+            <!-- Power Points counter -->
+            <p>
+                <input class="counter" type="text" value="0" inputmode="numeric" readonly t4-rpgcode="sw" t4-metric="power-points" t4-min="0" t4-max="no-max" t4-save-key="pp" t4-alert-threshold="min" />
+            </p>
+            
+            <!-- Add Power Point(s) button -->
+            <p>
+                <button type="button" class="squareButton counter-button no-print" type="button" t4-rpgcode="sw" t4-action="add" t4-metric="power-points" t4-step="1">
+                    <div class="step-indicator"></div>
+                </button>
+            </p>
+
+            <!-- Remove Power Point(s) button -->
+            <p>
+                <button type="button" class="squareButton counter-button no-print" type="button" disabled t4-rpgcode="sw" t4-action="remove" t4-metric="power-points" t4-step="1">
+                    <div class="step-indicator"></div>
+                </button>
+            </p>
+            
+            <!-- Reset Power Points button -->
+            <p>
+                <button type="button" class="squareButton counter-button no-print" type="button" disabled t4-rpgcode="sw" t4-action="reset" t4-metric="power-points">
+                </button>
+            </p>
+            
+            <!-- Dropdown list to choose how many Power Points to add/remove -->
+            <p>
+                <label data-i18n="sw.terms-short.modifier">mod.</label>
+                <select class="squareSelect counter-step-chooser" t4-rpgcode="sw" t4-metric="power-points" t4-rpgcode="sw" t4-action="change-step" t4-metric="power-points">
+                    <option value="1" selected>1</option>
+                    <option value="2">2</option>
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                </select>
+            </p>
+        </fieldset>
+        
+        <!-- Extra Counter for generic use -->
+        <fieldset>
+            <legend data-i18n="sw.specific-strings.extra-counter-1-fieldset-title">Extra Counter 1</legend>
+            <p>
+                <input class="counter" type="text" value="0" inputmode="numeric" readonly t4-rpgcode="sw" t4-metric="extra-counter-1" t4-min="0" t4-max="no-max" t4-save-key="ec1" />
+            </p>
+            <p>
+                <button type="button" class="squareButton counter-button no-print" type="button" t4-rpgcode="sw" t4-action="add" t4-metric="extra-counter-1" t4-step="1">
+                    <div class="step-indicator"></div>
+                </button>
+            </p>
+            <p>
+                <button type="button" class="squareButton counter-button no-print" type="button" disabled t4-rpgcode="sw" t4-action="remove" t4-metric="extra-counter-1" t4-step="1">
+                    <div class="step-indicator"></div>
+                </button>
+            </p>
+            <p>
+                <button type="button" class="squareButton counter-button no-print" type="button" disabled t4-rpgcode="sw" t4-action="reset" t4-metric="extra-counter-1">
+                </button>
+            </p>
+        </fieldset>
+        
+        <!-- Extra Counter for generic use -->
+        <fieldset>
+            <legend data-i18n="sw.specific-strings.extra-counter-2-fieldset-title">Extra Counter 2</legend>
+            <p>
+                <input class="counter" type="text" value="0" inputmode="numeric" readonly t4-rpgcode="sw" t4-metric="extra-counter-2" t4-min="0" t4-max="no-max" t4-save-key="ec2" />
+            </p>
+            <p>
+                <button type="button" class="squareButton counter-button no-print" type="button" t4-rpgcode="sw" t4-action="add" t4-metric="extra-counter-2" t4-step="1">
+                    <div class="step-indicator"></div>
+                </button>
+            </p>
+            <p>
+                <button type="button" class="squareButton counter-button no-print" type="button" disabled t4-rpgcode="sw" t4-action="remove" t4-metric="extra-counter-2" t4-step="1">
+                    <div class="step-indicator"></div>
+                </button>
+            </p>
+            <p>
+                <button type="button" class="squareButton counter-button no-print" type="button" disabled t4-rpgcode="sw" t4-action="reset" t4-metric="extra-counter-2">
+                </button>
+            </p>
+        </fieldset>
+        
+        <!-- Extra Counter for generic use -->
+        <fieldset>
+            <legend data-i18n="sw.specific-strings.extra-counter-3-fieldset-title">Extra Counter 3</legend>
+            <p>
+                <input class="counter" type="text" value="0" inputmode="numeric" readonly t4-rpgcode="sw" t4-metric="extra-counter-3" t4-min="0" t4-max="no-max" t4-save-key="ec3" />
+            </p>
+            <p>
+                <button type="button" class="squareButton counter-button no-print" type="button" t4-rpgcode="sw" t4-action="add" t4-metric="extra-counter-3" t4-step="1">
+                    <div class="step-indicator"></div>
+                </button>
+            </p>
+            <p>
+                <button type="button" class="squareButton counter-button no-print" type="button" disabled t4-rpgcode="sw" t4-action="remove" t4-metric="extra-counter-3" t4-step="1">
+                    <div class="step-indicator"></div>
+                </button>
+            </p>
+            <p>
+                <button type="button" class="squareButton counter-button no-print" type="button" disabled t4-rpgcode="sw" t4-action="reset" t4-metric="extra-counter-3">
+                </button>
+            </p>
+        </fieldset>
+    </form>
+
+    <!-- PEG Fan License Notice -->
+    <div id="peg-notice">
+        <div id="peg-notice-close-button"></div>
+        <p id="peg-fan-license-logo"></p>
+        <p id="peg-fan-license-notice-text">This game references the Savage Worlds game system, available from Pinnacle Entertainment Group at www.peginc.com. Savage Worlds and all associated logos and trademarks are copyrights of Pinnacle Entertainment Group. Used with permission. Pinnacle makes no representation or warranty as to the quality, viability, or suitability for purpose of this product.</p>
+    </div>
+
+    <!-- Message displayed in alert after save link has been copied into the clipboard -->
+    <div id="save-url-message" style="display: none;" data-i18n="sw.specific-strings.save-link-feedback-message">Link copied to clipboard. Remember to save it so you can find your counters the next time you play!</div>
+    
+    <!-- Message displayed in confirm when reset all counters button is clicked -->
+    <div id="confirm-reset-all-message" style="display: none;" data-i18n="sw.specific-strings.reset-all-confirm-message">Are you sure you want to reset all the counters?</div>
+
+</body>
+
+<!-- Translation library / it includes translated strings use with data-i18n attributes -->
+<script src="js/i18n.js"></script>
+
+</html>
