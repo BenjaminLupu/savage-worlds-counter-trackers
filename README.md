@@ -1,1 +1,2 @@
-**Temporary readme (more coming soon):** a simple utilitary to track and manage Savage Worlds TTRPG counters and modifiers such as Wounds, Fatigue and Power Points on your phone.
+# Savage Worlds Counter Tracker
+In all tabletop roleplaying games, players must keep track of indicators (e.g. hit points, number of turns a spell lasts, etc.). Most of the time, it's done with a good old sheet of paper, a pencil and an eraser. The more adventurous use dice or small counters, which you can buy online. Legend says that some players even manage to use their memory. So what is this counter tracker? This project aims to use our smartphones for bookkeeping during IRL Savage Worlds sessions.
