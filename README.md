@@ -10,17 +10,18 @@ During a game of Savage Worlds, players track the following indicators for their
 - Fatigue
 - Power Points _if the character has any powers (e.g. a spell-casting magician)_
 
-Savage Worlds Counter Tracker provides a counter for each of these indicators. In addition to these counters, it also provides tracking of wounds and fatigue malus, as well as ready-to-use generic counters.
+Savage Worlds Counter Tracker provides a counter for each of these indicators. In addition to these counters, it also provides tracking of wounds and fatigue malus, as well as ready-to-use extra counters.
 
 > [!IMPORTANT]
 > Savage Worlds Counter Tracker is based on Savage Worlds Adventure Edition.
 
-### Bennies
+### Counters
+#### Bennies
 - The bennie counter has a default value of 3.
 - Players can add and remove bennies.
 - They can also reset the counter.
 - The counter turns red when it reaches 0.
-### Wounds
+#### Wounds
 - The injury counter has a default value of 0 and a maximum value of 3.
 - The user can add and remove injuries.
 - They can also reset the counter.
@@ -28,8 +29,15 @@ Savage Worlds Counter Tracker provides a counter for each of these indicators. I
 - Each injury results in a -1 penalty to Trait rolls and Pace.
 > [!NOTE]
 > In Savage Worlds, **trait rolls** include attribute rolls (e.g. Strength) and skill rolls (e.g. Stealth). **Pace** represents how fast a character moves.
-### Fatigue
-### Power Points
+#### Fatigue
+#### Power Points
+#### Extra Counters
+#### Reset All Counters
+#### Backup Counter Values
+### Modifiers
+#### Trait Rolls
+#### Pace
+### Languages
 
 ---
 <p align="center">
