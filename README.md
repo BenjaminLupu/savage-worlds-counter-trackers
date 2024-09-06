@@ -17,7 +17,7 @@ In all tabletop roleplaying games, players must keep track of indicators (e.g. h
 ### Languages
 - _Savage World Counter Tracker_ is available in English and French.
 - It automatically detects the current browser language.
-- Players can force the language by adding a lang parameter in the _Savage Worlds Counter Tracker_ link (e.g. https://mylink.com/?lang=en).
+- Players can force the language by adding a _lang_ parameter in the _Savage Worlds Counter Tracker_ link (e.g. https://mylink.com/?lang=en).
 - Language codes are the standard 2 letters ISO 639-1 codes (https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes)
 > [!NOTE]
 > If you wish to provide a translation in your language, please don't hesitate to contact me.
@@ -45,7 +45,7 @@ During a game of Savage Worlds, players track the following indicators for their
 _Savage Worlds Counter Tracker_ provides a counter for each of these indicators. In addition to these counters, it also provides tracking of wounds and fatigue malus, as well as ready-to-use extra counters.
 
 > [!IMPORTANT]
-> _Savage Worlds Counter Tracker_ is based on Savage Worlds Adventure Edition.
+> _Savage Worlds Counter Tracker_ is based on Savage Worlds Adventure Edition's rules.
 
 ### Counters
 #### Bennies
@@ -112,7 +112,7 @@ _Savage Worlds Counter Tracker_ provides a counter for each of these indicators.
   <kbd><img width="382" height="113" src="https://benjaminlupu.net/tiny-tabletop-tools/savage-worlds/counter-tracker/screenshots/en/savage-worlds-counter-tracker-reset-all-counters-button.jpg"></kbd>
 </p>
 
-- Clicking on the _Reset All Counters_ button in the header sets all counter and modifier values to 0.
+- Clicking on the _Reset All Counters_ button in the header sets all counter and modifier to default values.
 #### Backup Counter Values
 
 <p align="center">
@@ -120,7 +120,7 @@ _Savage Worlds Counter Tracker_ provides a counter for each of these indicators.
 </p>
 
 - Players can backup current values for later use.
-- Clicking on _Create Save Link_ button generate a URL with a series of parameters.
+- Clicking on _Create Save Link_ button generates a link with a series of parameters.
 - Each parameter corresponds to a counter value.
 - Store this link in a safe place for later use.
 #### Recover Saved Counter Values
