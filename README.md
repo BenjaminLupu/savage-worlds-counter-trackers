@@ -21,13 +21,20 @@ In all tabletop roleplaying games, players must keep track of indicators (e.g. h
 - Language codes are the standard 2 letters ISO 639-1 codes (https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes)
 > [!NOTE]
 > If you wish to provide a translation in your language, please don't hesitate to contact me.
+
+<details>
+  <summary>Click for more about technology and browser compatibilities</summary>
+  
 ### A Word About Technology
 - You can host _Savage Worlds Counter Tracker_ on any web server or even launch locally on your computer.
 - _Savage Worlds Counter Tracker_ is lightweight mix of standard HTML, CSS and Javascript (i.e. a web page).
 - It relies on no dependencies, using only standard web technologies.
 - It doesn't require any server side technologies (such as PHP).
-> [!CAUTION]
-> This project was fun to develop for me. I have used bleeding edge (but standard) CSS and Javascript features. I recommend to use _Savage Worlds Counter Tracker_ with latest browser versions. Please note that I have tested _Savage Worlds Counter Tracker_ in Google Chrome both in its Windows computer and Android versions. So you might encounter issues with other browsers and OS (e.g. iOS Safari). 
+> :warning: This project was fun to develop for me. I have used bleeding edge (but standard) CSS and Javascript features. I recommend to use _Savage Worlds Counter Tracker_ with latest browser versions. Please note that I have tested _Savage Worlds Counter Tracker_ in Google Chrome both in its Windows computer and Android versions. So you might encounter issues with other browsers and OS (e.g. iOS Safari).
+
+</details>
+
+
 ## Features
 During a game of Savage Worlds, players track the following indicators for their characters:
 - Bennies (chips that can be used to change the course of the game)
