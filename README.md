@@ -10,7 +10,7 @@ In all tabletop roleplaying games, players must keep track of indicators (e.g. h
 - _Savage World Counter Tracker_ is available in English and French.
 - It automatically detects the current browser language.
 - Players can force the language by adding a lang parameter in the _Savage Worlds Counter Tracker_ link (e.g. https://mylink.com/?lang=en).
-- Language codes are the standard 2 letters ISO 639-1 codes.
+- Language codes are the [https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes](standard 2 letters ISO 639-1 codes).
 > [!NOTE]
 > If you wish to provide a translation in your language, please don't hesitate to contact me.
 ### A Word About Technology
