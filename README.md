@@ -142,6 +142,6 @@ Alongside the counters, you'll find two fields for the malus applied to Trait ro
  
 ---
 <p align="center">
-  <kbd></kbd><img width="120" height="80" src="https://benjaminlupu.net/tiny-tabletop-tools/savage-worlds/counter-tracker/img/peg-fan-license-logo.png"></p>
+  <img width="120" height="80" src="https://benjaminlupu.net/tiny-tabletop-tools/savage-worlds/counter-tracker/img/peg-fan-license-logo.png"></p>
 </p>
 This page references the Savage Worlds game system, available from Pinnacle Entertainment Group at www.peginc.com. Savage Worlds and all associated logos and trademarks are copyrights of Pinnacle Entertainment Group. Used with permission. Pinnacle makes no representation or warranty as to the quality, viability, or suitability for purpose of this product.
