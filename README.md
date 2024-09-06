@@ -9,9 +9,9 @@ In all tabletop roleplaying games, players must keep track of indicators (e.g. h
 > If you're not familiar with **Savage Worlds**, it could well be your next **roleplaying game**. Savage Worlds is a classless game focused on a **fun, fast-paced, action-packed experience**. Savage Worlds lets you play in an infinite number of worlds. Fantasy? Espionage? Space opera? Superheroes? Savage Worlds gets you covered. [It's your next stop for adventure](https://peginc.com/savage-settings/savage-worlds/).
 
 ## How To Use _Savage Worlds Counter Tracker_
-- Launch a web browser
+- Launch a web browser.
 - Open the _Savage Worlds Counter Tracker_ link.
-- Or open locally the _index.html_ file (in the _counter-tracker folder_) in a web browser.
+  - or open locally the _index.html_ file (in the _counter-tracker folder_) in a web browser.
 - That' it. Happy game with your friends :smile:.
 - **Want to see how it looks?** https://benjaminlupu.net/tiny-tabletop-tools/savage-worlds/counter-tracker/
 ### Languages
