@@ -1,11 +1,17 @@
-# Savage Worlds Counter Tracker
+# Savage Worlds Counter Tracker [![Click for demo](https://img.shields.io/badge/Click%20for%20demo-green)](https://benjaminlupu.net/tiny-tabletop-tools/savage-worlds/counter-tracker/)
 In all tabletop roleplaying games, players must keep track of indicators (e.g. hit points, number of turns a spell lasts, etc.). Most of the time, it's done with a good old sheet of paper, a pencil and an eraser. The more adventurous use dice or small counters, which you can buy online. Legend says that some players even manage to use their memory. So what is this counter tracker? **This project aims to use our smartphones for bookkeeping during IRL Savage Worlds sessions**.
+
+<p align="center">
+  <kbd><img width="383" height="837" src="https://benjaminlupu.net/tiny-tabletop-tools/savage-worlds/counter-tracker/screenshots/en/savage-worlds-counter-tracker.jpg"></kbd>
+</p>
+
 > [!NOTE]
 > If you're not familiar with **Savage Worlds**, it could well be your next **roleplaying game**. Savage Worlds is a classless game focused on a **fun, fast-paced, action-packed experience**. Savage Worlds lets you play in an infinite number of worlds. Fantasy? Espionage? Space opera? Superheroes? Savage Worlds gets you covered. [It's your next stop for adventure](https://peginc.com/savage-settings/savage-worlds/).
 
 ## How To Use _Savage Worlds Counter Tracker_
-- **Load the index.html file (in the counter-tracker folder) into a web browser.**
+- **Launch the index.html file (in the counter-tracker folder) in a web browser.**
 - That' it. Happy game with your friends :smile:.
+- **Want to see how it looks?** https://benjaminlupu.net/tiny-tabletop-tools/savage-worlds/counter-tracker/
 ### Languages
 - _Savage World Counter Tracker_ is available in English and French.
 - It automatically detects the current browser language.
@@ -34,11 +40,21 @@ _Savage Worlds Counter Tracker_ provides a counter for each of these indicators.
 
 ### Counters
 #### Bennies
+
+<p align="center">
+  <kbd><img width="382" height="123" src="https://benjaminlupu.net/tiny-tabletop-tools/savage-worlds/counter-tracker/screenshots/en/savage-worlds-counter-tracker-bennies.jpg"></kbd>
+</p>
+
 - The Bennie counter has a default value of 3.
 - Players can add and remove Bennies.
 - They can also reset the counter.
 - The counter turns red when it reaches 0.
 #### Wounds
+
+<p align="center">
+  <kbd><img width="382" height="120" src="https://benjaminlupu.net/tiny-tabletop-tools/savage-worlds/counter-tracker/screenshots/en/savage-worlds-counter-tracker-wounds.jpg"></kbd>
+</p>
+
 - The Wounds counter has a default value of 0 and a maximum value of 3.
 - Players can add and remove Wounds.
 - They can also reset the counter.
@@ -47,12 +63,22 @@ _Savage Worlds Counter Tracker_ provides a counter for each of these indicators.
 > [!NOTE]
 > In Savage Worlds, **Trait rolls** include Attribute rolls (e.g. Strength) and Skill rolls (e.g. Stealth). **Pace** represents how fast a character moves.
 #### Fatigue
+
+<p align="center">
+  <kbd><img width="382" height="123" src="https://benjaminlupu.net/tiny-tabletop-tools/savage-worlds/counter-tracker/screenshots/en/savage-worlds-counter-tracker-fatigue.jpg"></kbd>
+</p>
+
 - Fatigue starts at 0 and has a maximum value of 2.
 - Players can increase and decrease fatigue.
 - They can also reset the counter.
 - The counter turns red when it reaches 0.
 - Each increase results in a -1 penalty to Trait rolls (cumulative with penalties from wounds). 
 #### Power Points
+
+<p align="center">
+  <kbd><img width="391" height="313" src="https://benjaminlupu.net/tiny-tabletop-tools/savage-worlds/counter-tracker/screenshots/en/savage-worlds-counter-tracker-power-points.jpg"></kbd>
+</p>
+
 - Power Points value is 0 by default.
 - Players can set the counter to the correct number by adding 1, 2, 5 or 10 points for easiness.
 - Players can decrease Power Points when spending them and increase Power Points when regaining them.
@@ -60,6 +86,11 @@ _Savage Worlds Counter Tracker_ provides a counter for each of these indicators.
 - The counter has no maximum value.
 - It turns red when reaching 0.
 #### Extra Counters
+
+<p align="center">
+  <kbd><img width="385" height="406" src="https://benjaminlupu.net/tiny-tabletop-tools/savage-worlds/counter-tracker/screenshots/en/savage-worlds-counter-tracker-extra-counters.jpg"></kbd>
+</p>
+
 - Sometimes, players need track extra indicators.
 - _Savage Worlds Counter Tracker_ offers 3 extra generic counters for that.
 - Extra counters have a value of 0 and no maximum value.
@@ -67,8 +98,18 @@ _Savage Worlds Counter Tracker_ provides a counter for each of these indicators.
 - They can also reset extra counters.
 - Extra counters turns red when reaching 0.
 #### Reset All Counters
+
+<p align="center">
+  <kbd><img width="382" height="113" src="https://benjaminlupu.net/tiny-tabletop-tools/savage-worlds/counter-tracker/screenshots/en/savage-worlds-counter-tracker-reset-all-counters-button.jpg"></kbd>
+</p>
+
 - Clicking on the _Reset All Counters_ button in the header sets all counter and modifier values to 0.
 #### Backup Counter Values
+
+<p align="center">
+  <kbd><img width="382" height="113" src="https://benjaminlupu.net/tiny-tabletop-tools/savage-worlds/counter-tracker/screenshots/en/savage-worlds-counter-tracker-create-save-link-button.jpg"></kbd>
+</p>
+
 - Players can backup current values for later use.
 - Clicking on _Create Save Link_ button generate a URL with a series of parameters.
 - Each parameter corresponds to a counter value.
@@ -77,6 +118,11 @@ _Savage Worlds Counter Tracker_ provides a counter for each of these indicators.
 - To recover saved counter values, use a save link (see Backup Counter Values above on how to create one).
 - Paste the save link in a browser address bar and that's it: _Savage Worlds Counter Tracker_ will be displayed with saved values.
 ### Modifiers
+
+<p align="center">
+  <kbd><img width="382" height="129" src="https://benjaminlupu.net/tiny-tabletop-tools/savage-worlds/counter-tracker/screenshots/en/savage-worlds-counter-tracker-modifiers.jpg"></kbd>
+</p>
+
 Alongside the counters, you'll find two fields for the malus applied to Trait rolls and Pace.
 #### Trait Rolls
 - When the Wounds or the Fatigue counters increase, the penalty for Trait rolls is increased by 1.
@@ -87,6 +133,6 @@ Alongside the counters, you'll find two fields for the malus applied to Trait ro
  
 ---
 <p align="center">
-  <img width="120" height="80" src="https://benjaminlupu.net/tiny-tabletop-tools/savage-worlds/counter-tracker/img/peg-fan-license-logo.png">
+  <kbd></kbd><img width="120" height="80" src="https://benjaminlupu.net/tiny-tabletop-tools/savage-worlds/counter-tracker/img/peg-fan-license-logo.png"></p>
 </p>
 This page references the Savage Worlds game system, available from Pinnacle Entertainment Group at www.peginc.com. Savage Worlds and all associated logos and trademarks are copyrights of Pinnacle Entertainment Group. Used with permission. Pinnacle makes no representation or warranty as to the quality, viability, or suitability for purpose of this product.
