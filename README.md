@@ -22,6 +22,10 @@ In all tabletop roleplaying games, players must keep track of indicators (e.g. h
 > [!NOTE]
 > For my part, I've integrated a QR code on the character sheet I use with my players to let them easily launch their counter trackers at the beginning if a game session. My character sheets are available on Google Drive: https://drive.google.com/drive/folders/1-ykjtv6aqMmJLe4lJ5fWVkiGO06rE--n?usp=sharing. 
 
+<p align="center">
+  <kbd><img width="427" height="155" src="https://benjaminlupu.net/tiny-tabletop-tools/savage-worlds/counter-tracker/screenshots/en/savage-worlds-character-sheet-qr-code.png"></kbd>
+</p>
+
 <details>
   <summary>Click for more about technology and browser compatibilities</summary>
   
