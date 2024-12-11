@@ -20,7 +20,7 @@ In all tabletop roleplaying games, players must keep track of indicators (e.g. h
 - Players can force the language by adding a _lang_ parameter in the _Savage Worlds Counter Tracker_ link (e.g. https://mylink.com/?lang=en).
 - Language codes are the standard 2 letters ISO 639-1 codes (https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes)
 > [!NOTE]
-> For my part, I've integrated a QR code on the character sheet I use with my players to let them easily launch their counter trackers at the beginning if a game session. My character sheets are available on Google Drive: https://drive.google.com/drive/folders/1-ykjtv6aqMmJLe4lJ5fWVkiGO06rE--n?usp=sharing. 
+> For my part, I've integrated a QR code on the character sheet I use with my players to let them easily launch their counter trackers at the beginning if a game session. My character sheets are available on GitHub: https://github.com/BenjaminLupu/savage-worlds-game-sheets. 
 
 <p align="center">
   <kbd><img width="734" height="266" src="https://benjaminlupu.net/tiny-tabletop-tools/savage-worlds/counter-tracker/screenshots/en/savage-worlds-character-sheet-qr-code.png"></kbd>
